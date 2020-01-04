@@ -1,0 +1,35 @@
+{
+  "name": "node-challenge-typescript",
+  "version": "1.0.0",
+  "description": "Redoing refactoring MyDoc's API challenge using TypeScript - My 3 - day chalenge!!!",
+  "main": "./jsbuild/init.js",
+  "scripts": {
+    "build": "tsc",
+    "postinstall": "npm run build",
+    "start": "npm run serve",
+    "dev": "nodemon  ./init.ts",
+    "serve": "node ./jsbuild/init.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jiobiagba/node-challenge-typescript.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jiobiagba/node-challenge-typescript/issues"
+  },
+  "homepage": "https://github.com/jiobiagba/node-challenge-typescript#readme",
+  "dependencies": {
+    "@types/express": "^4.17.2",
+    "@types/mongoose": "^5.5.38",
+    "@types/node": "^13.1.4",
+    "express": "^4.17.1",
+    "mongoose": "^5.8.4",
+    "nodemon": "^2.0.2",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.4"
+  }
+}
