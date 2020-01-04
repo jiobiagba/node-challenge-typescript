@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "description": "Redoing refactoring MyDoc's API challenge using TypeScript - My 3 - day chalenge!!!",
   "main": ".jsbuild/init.js",
+  "engines": {
+    "node": "10.15.3"
+  },
   "scripts": {
     "test": "mocha test --reporter spec",
     "build": "tsc",
     "postinstall": "npm run build",
     "start": "npm run serve",
-    "dev": "nodemon  ./init.ts",
-    "serve": "node ./jsbuild/init.js"
+    "dev": "nodemon  init.ts",
+    "serve": "node jsbuild/init.js"
   },
   "repository": {
     "type": "git",
