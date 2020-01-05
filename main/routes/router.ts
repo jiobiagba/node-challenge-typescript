@@ -10,4 +10,7 @@ export class Router {
     public routeTimestamp(app: Application) {
         app.route('/timestamp/api/v1/:object/:mykey/:timestamp').get(Controller.getWithTimestamp)
     }
+    public noRoute(app: Application) {
+        app.route('*').all(Controller.general)
+    }
 }
