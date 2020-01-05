@@ -7,10 +7,18 @@ export class Controller {
             message: "We are now live with controller working!"
         })
     }
-    public static getOne(req: Request, res: Response) {
-        res.status(200).json({
-            message: "This will handle GET requests without timestamps."
-        })
+    public static async getOne(req: Request, res: Response) {
+        try {
+            const key = req.params.mykey
+            const result =  await infoModel.findOne({ key: key }).sort({ timestamp: -1 })
+            console.log(`GET result: \n${result}`)
+            res.status(200).json(result)
+        }
+        catch (err) {
+            res.status(500).json({
+                msg: err
+            })
+        }
     }
 
     public static getWithTimestamp(req: Request, res: Response) {

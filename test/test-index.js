@@ -66,18 +66,18 @@ function allTests() {
             })
     })
 
-    // it('gets latest value when no timestamp is given', (done) => {
-    //     //Check here is to ensure key matches initial key and value change and timestamp matches when testData1 was posted
-    //     superagent.get('http://localhost:' + port + '/api/v1/object/' + myKey)
-    //         .end((err, res) => {
-    //             expect(err).toBe(null)
-    //             expect(typeof res.body).toBe('object')
-    //             expect(res.body.key).toBe(Object.keys(testData1)[0])
-    //             expect(res.body.value).toBe(Object.values(testData1)[0])
-    //             expect(res.body.timestamp).toBe(firstTime)
-    //             done()
-    //         })
-    // })
+    it('gets latest value when no timestamp is given', (done) => {
+        //Check here is to ensure key matches initial key and value change and timestamp matches when testData1 was posted
+        superagent.get('http://localhost:' + port + '/api/v1/object/' + myKey)
+            .end((err, res) => {
+                expect(err).toBe(null)
+                expect(typeof res.body).toBe('object')
+                expect(res.body.key).toBe(Object.keys(testData1)[0])
+                expect(res.body.value).toBe(Object.values(testData1)[0])
+                expect(res.body.timestamp).toBe(firstTime)
+                done()
+            })
+    })
 
     // it('posts another object - same key different value', (done) => {
     //         //2nd POST request is delayed for 1.2 seconds
