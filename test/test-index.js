@@ -17,7 +17,7 @@ const waiter = (ms) => {
 }
 
 beforeEach(function() {
-    mongoose.connect(url, {
+    mongoose.connect(localURL, {
         useNewUrlParser: true,
         useUnifiedTopology: true 
     }) 
@@ -35,9 +35,9 @@ describe('start server', function() {
 describe('tests for http apis for mydoc challenge', allTests)
 
 
-after(function () {
-    process.exit(0)
-})
+// after(function () {
+//     process.exit(0)
+// })
 
 //Function which has all tests in it
 function allTests() {
@@ -123,4 +123,8 @@ function allTests() {
     //             done()
     //         })
     // })
+
+    after(function () {
+        process.exit(0)
+    })
 }
