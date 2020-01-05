@@ -25,7 +25,7 @@ export class Controller {
         try {
             const time = req.params.timestamp,
                     key = req.params.mykey,
-                    result = await infoModel.find({ key: key }).sort({ timestamp: -1 })
+                    result: Document[] | any = await infoModel.find({ key: key }).sort({ timestamp: -1 })
 
             console.log(`All GET results: \n${result}`)
 
