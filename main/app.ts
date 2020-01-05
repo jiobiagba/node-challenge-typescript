@@ -13,6 +13,7 @@ export class App {
         this.settings()
         this.router.route(this.app)
         this.router.routeTimestamp(this.app)
+        this.router.noRoute(this.app)
     }
 
     private settings(): void {
