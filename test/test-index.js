@@ -36,7 +36,7 @@ describe('tests for http apis for mydoc challenge', allTests)
 
 
 after(function () {
-    ender()
+    process.exit(0)
 })
 
 //Function which has all tests in it
