@@ -21,10 +21,26 @@ export class Controller {
         }
     }
 
-    public static getWithTimestamp(req: Request, res: Response) {
-        res.status(200).json({
-            message: "This will handle GET requests with timestamps"
-        })
+    public static async getWithTimestamp(req: Request, res: Response) {
+        try {
+            const time = req.params.timestamp,
+                    key = req.params.mykey,
+                    result: Document[] | any = await infoModel.find({ key: key }).sort({ timestamp: -1 })
+
+            console.log(`All GET results: \n${result}`)
+
+            const finalResult = result.find((item, index, array) => {
+                        return item.timestamp <= time
+                    })
+            console.log(`GET with Timestamp result: \n${finalResult}`)
+            res.status(200).json(finalResult)
+
+        }
+        catch (err) {
+            res.status(500).json({
+                msg: err
+            })
+        }
     }
 
     public static async postOne(req: Request, res: Response) {
