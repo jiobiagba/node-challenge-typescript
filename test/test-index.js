@@ -1,9 +1,11 @@
 const superagent = require('superagent'),
         expect = require('expect'),
-        starter = require('../index').starter,
+        starter = require('../jsbuild/init').starter,
         mongoose = require('mongoose'),
         url = process.env.MONGO_TEST_URI, //For MongoDB Atlas
         localURL = 'mongodb://localhost/mydoc' //For Local MongoDB
+
+
 
 
 //Synchronous delay function to be used in place of setTimeOut
@@ -19,7 +21,7 @@ beforeEach(function() {
     }) 
     
     const db = mongoose.connection
-    db.on('error', console.error.bind(debug, 'Error in database connection: '))
+    db.on('error', console.error.bind(console, 'Error in database connection: '))
 })
 
 describe('start server', function() {
