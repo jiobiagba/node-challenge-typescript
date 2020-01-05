@@ -11,8 +11,13 @@ const power = ():void => {
     })
 }
 
+const shutdoun = (done: any):void => {
+    server.close(done)
+}
+
 if(require.main === module) {
     power()
 } else {
     exports.starter = power
+    exports.ender = shutdoun
 }

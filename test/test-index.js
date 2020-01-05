@@ -2,6 +2,7 @@ const superagent = require('superagent'),
         expect = require('expect'),
         port = process.env.PORT || 1010,
         starter = require('../jsbuild/init').starter,
+        ender = require('../jsbuild/init').ender,
         mongoose = require('mongoose'),
         url = process.env.MONGO_TEST_URI, //For MongoDB Atlas
         localURL = 'mongodb://localhost/mydoc' //For Local MongoDB
@@ -33,6 +34,10 @@ describe('start server', function() {
 //Describing how the apis should behave
 describe('tests for http apis for mydoc challenge', allTests)
 
+
+after(function () {
+    ender()
+})
 
 //Function which has all tests in it
 function allTests() {
@@ -117,9 +122,5 @@ function allTests() {
     //             expect(res.body.timestamp).toBeLessThanOrEqual(secondTime)
     //             done()
     //         })
-    // })
-
-    // after(function () {
-    //     process.exit(0)
     // })
 }
