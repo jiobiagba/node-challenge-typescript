@@ -1,6 +1,7 @@
 import * as express from "express"
 import { Router } from "./routes/router"
 import { MongooseConnect } from "./schema/mongoose-setup"
+import * as cors from "cors"
 
 export class App {
     public app: express.Application
@@ -19,5 +20,6 @@ export class App {
     private settings(): void {
         this.app.use(express.json())
         this.app.use(express.urlencoded({ extended: false }))
+        this.app.use(cors())
     }
 }
