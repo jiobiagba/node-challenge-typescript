@@ -66,7 +66,7 @@ export class Controller {
     public static async postOne(req: Request, res: Response) {
         try{
             const data: Document | any = new infoModel ({
-                key: Object.keys(req.body)[0],
+                key: Object.keys(req.body)[0].trim(),
                 value: Object.values(req.body)[0],
                 timestamp: Date.now()
             })
