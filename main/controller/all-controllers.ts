@@ -79,7 +79,6 @@ export class Controller {
             }
 
             const feedback = await data.save()
-            console.log(`POST DATA: \n${feedback}`)
             res.status(200).json(feedback)
         }
         catch (err) {
