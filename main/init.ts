@@ -11,7 +11,7 @@ const power = ():void => {
     })
 }
 
-const shutdoun = (done: any):void => {
+const shutdoun = (done?: any):void => {
     server.close(done)
 }
 

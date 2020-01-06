@@ -42,7 +42,7 @@ export class Controller {
                 return
             }
 
-            const finalResult = result.find((item, index, array) => {
+            const finalResult = result.find((item: any, index: number, array: []) => {
                         return item.timestamp <= time
                     })
 
@@ -66,7 +66,7 @@ export class Controller {
     public static async postOne(req: Request, res: Response) {
         try{
             const data: Document | any = new infoModel ({
-                key: Object.keys(req.body)[0].trim(),
+                key: Object.keys(req.body)[0],
                 value: Object.values(req.body)[0],
                 timestamp: Date.now()
             })
