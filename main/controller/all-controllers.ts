@@ -1,11 +1,11 @@
 import { Request, Response } from "express"
 import { infoModel } from "../schema/kp-schema"
+import { Gen } from "../handlers/res-handler"
 
 export class Controller {
     public static home(req: Request, res: Response) {
-        res.status(200).json({
-            message: "We are now live with controller working!"
-        })
+        const msg: string = "Abstraction worked part 2! We are now live! Controller working!"
+        new Gen(200, msg).allSender(req, res)
     }
 
     public static async getOne(req: Request, res: Response) {
@@ -14,18 +14,14 @@ export class Controller {
             const result =  await infoModel.findOne({ key: key }).sort({ timestamp: -1 })
 
             if(result === null || result === undefined) {
-                res.status(404).json({
-                    msg: 'Key not found!!!'
-                })
+                new Gen(404, "Key not found").allSender(req, res)
                 return
             }
 
-            res.status(200).json(result)
+            new Gen(200, result).resSender(req, res)
         }
         catch (err) {
-            res.status(500).json({
-                msg: err
-            })
+            new Gen(500, err).allSender(req, res)
         }
     }
 
@@ -36,9 +32,7 @@ export class Controller {
                     result: Document[] | any = await infoModel.find({ key: key }).sort({ timestamp: -1 })
             
             if(result === null || result === undefined) {
-                res.status(404).json({
-                    msg: 'Key not found in store!!!'
-                })
+                new Gen(404, "Key not found in store").allSender(req, res)
                 return
             }
 
@@ -47,19 +41,14 @@ export class Controller {
                     })
 
             if(finalResult === null || finalResult === undefined) {
-                res.status(404).json({
-                    msg: 'No record of this key being saved before this time!!!'
-                })
+                new Gen(404, "No record of this key being saved before this time").allSender(req, res)
                 return
             }
 
-            res.status(200).json(finalResult)
-
+            new Gen(200, finalResult).resSender(req, res)
         }
         catch (err) {
-            res.status(500).json({
-                msg: err
-            })
+            new Gen(500, err).allSender(req, res)
         }
     }
 
@@ -72,25 +61,20 @@ export class Controller {
             })
 
             if(data.key === null || data.key === undefined || data.value === null || data.value === undefined) {
-                res.status(400).json({
-                    msg: 'Key AND value MUST be provided'
-                })
+                new Gen(400, 'Key AND value MUST be provided').allSender(req, res)
                 return
             }
 
             const feedback = await data.save()
-            res.status(200).json(feedback)
+            new Gen(200, feedback).resSender(req, res)
         }
         catch (err) {
-            res.status(500).json({
-                msg: err
-            })
+            new Gen(500, err).allSender(req, res)
         }
     }
 
     public static general(req: Request, res: Response) {
-        res.status(400).json({
-            msg: "This route does not exist!"
-        })
+        const msg: string = "This route has not been created! Part 2"
+        new Gen(400, msg).allSender(req, res)
     }
 }
