@@ -17,7 +17,7 @@ const waiter = (ms) => {
 }
 
 beforeEach(function() {
-    mongoose.connect(url, {
+    mongoose.connect(localURL, {
         useNewUrlParser: true,
         useUnifiedTopology: true 
     }) 
