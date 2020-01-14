@@ -7,61 +7,66 @@ interface controllerInputs {
     res: Response,
     model: Model<Document>,
     params?: string
-    params2?: string
+    query?: string
 }
 
 export class Creator implements controllerInputs {
     public req: Request
     public res: Response
     public model: Model<Document>
+    public query?: string
     public params?: string
-    public params2?: string
 
     constructor(req: Request, res: Response, model: Model<Document>) {
         this.req = req,
         this.res = res,
         this.model = model,
+        this.query = req.query.timestamp
         this.params = req.params.mykey
-        this.params2 = req.params.timestamp
     }
 
     public async GETOne() {
-        try {
-            const result = await this.model.findOne({ key: this.params }).sort({ timestamp: -1 })
 
-            if(result === null || result === undefined) {
-                new Gen(404, "Key not found").allSender(this.req, this.res)
+        if(this.query === null || this.query === undefined) {
+            try {
+                const result = await this.model.findOne({ key: this.params }).sort({ timestamp: -1 })
+    
+                if(result === null || result === undefined) {
+                    new Gen(404, "Key not found").allSender(this.req, this.res)
+                    return
+                }
+
+    
+                new Gen(200, result).resSender(this.req, this.res)
                 return
             }
-
-            new Gen(200, result).resSender(this.req, this.res)
-        }
-        catch (err) {
-            new Gen(500, err).allSender(this.req, this.res)
-        }
-    }
-
-    public async GETOneTime() {
-        try {
-            const result: Document[] | any = await this.model.find({ key: this.params }).sort({ timestamp: -1 })
-            if(result === null || result === undefined) {
-                new Gen(404, "Key not found in store").allSender(this.req, this.res)
-                return
+            catch (err) {
+                new Gen(500, err).allSender(this.req, this.res)
             }
+        } else {
+            const model = this.model,
+                    time = parseInt(this.query)
 
-            const finalResult = result.find((item: any, index: number, arr: []) => {
-                return item.timestamp <= this.params2
-            })
+            try {
+                const finalResult: Document = matchingTimestamp(await model.find({ key: this.params }).sort({ timestamp: -1 }), time)
+    
+                if(finalResult === null || finalResult === undefined) {
+                    new Gen(404, "No record of this key being saved before this time").allSender(this.req, this.res)
+                    return
+                }
+    
+                new Gen(200, finalResult).resSender(this.req, this.res)
 
-            if(finalResult === null || finalResult === undefined) {
-                new Gen(404, "No record of this key being saved before this time").allSender(this.req, this.res)
-                return
+                function matchingTimestamp(arr: Document[], time: number) {
+                    const ans = arr.find((item: any, index: number, arr: []) => {
+                        return item.timestamp <= time
+                    })
+                    return ans
+                }
             }
-
-            new Gen(200, finalResult).resSender(this.req, this.res)
-        }
-        catch (err) {
-            new Gen(500, err).allSender(this.req, this.res)
+            catch (err) {
+                new Gen(500, err).allSender(this.req, this.res)
+            }
         }
     }
 
@@ -77,8 +82,6 @@ export class Creator implements controllerInputs {
                 new Gen(400, 'Key AND value MUST be provided').allSender(this.req, this.res)
                 return
             }
-
-            console.log(`POST Data: \n${data}`)
 
             const feedback = await data.save()
             new Gen(200, feedback).resSender(this.req, this.res)

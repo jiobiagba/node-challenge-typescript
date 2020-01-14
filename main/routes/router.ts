@@ -8,11 +8,6 @@ export class Router {
         app.route('/').get(Controller.home)
         app.route('/api/v1/:object/:mykey').get(Controller.getOne)
         app.route('/api/v1/:object').post(dataValidator(), validated, Controller.postOne)
-    }
-    public routeTimestamp(app: Application) {
-        app.route('/timestamp/api/v1/:object/:mykey/:timestamp').get(Controller.getWithTimestamp)
-    }
-    public noRoute(app: Application) {
         app.route('*').all(Controller.general)
     }
 }

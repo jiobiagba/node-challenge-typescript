@@ -13,10 +13,6 @@ export class Controller {
        new Creator(req, res, infoModel).GETOne()
     }
 
-    public static async getWithTimestamp(req: Request, res: Response) {
-        new Creator(req, res, infoModel).GETOneTime()
-    }
-
     public static async postOne(req: Request, res: Response) {
         new Creator(req, res, infoModel).POSTOne()
     }
