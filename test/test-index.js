@@ -17,7 +17,7 @@ const waiter = (ms) => {
 }
 
 beforeEach(function() {
-    mongoose.connect(url, {
+    mongoose.connect(localURL, {
         useNewUrlParser: true,
         useUnifiedTopology: true 
     }) 
@@ -114,7 +114,7 @@ function allTests() {
     it('gets value immediately less than or equal to given timestamp', (done) => {
         //thirdTime was done here to ensure firstTime and secondTime have both been gotten
         thirdTime = Math.round(firstTime + ((secondTime - firstTime) / 2))
-        superagent.get('http://localhost:' + port + '/timestamp/api/v1/object/' + myKey + '/' + thirdTime)
+        superagent.get('http://localhost:' + port + '/api/v1/object/' + myKey + '?timestamp=' + thirdTime)
             .end((err, res) => {
                 expect(err).toBe(null)
                 expect(typeof res.body).toBe('object')

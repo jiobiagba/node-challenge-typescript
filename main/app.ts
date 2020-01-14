@@ -13,8 +13,6 @@ export class App {
         this.mongoose
         this.settings()
         this.router.route(this.app)
-        this.router.routeTimestamp(this.app)
-        this.router.noRoute(this.app)
     }
 
     private settings(): void {
