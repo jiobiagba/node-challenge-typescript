@@ -44,17 +44,11 @@ export class Creator implements controllerInputs {
                 new Gen(500, err).allSender(this.req, this.res)
             }
         } else {
-            try {
-                const result: Document[] | any = await this.model.find({ key: this.params }).sort({ timestamp: -1 })
+            const model = this.model,
+                    time = parseInt(this.query)
 
-                if(result === null || result === undefined) {
-                    new Gen(404, "Key not found in store").allSender(this.req, this.res)
-                    return
-                }
-    
-                const finalResult = result.find((item: any, index: number, arr: []) => {
-                    return item.timestamp <= this.query
-                })
+            try {
+                const finalResult: Document = matchingTimestamp(await model.find({ key: this.params }).sort({ timestamp: -1 }), time)
     
                 if(finalResult === null || finalResult === undefined) {
                     new Gen(404, "No record of this key being saved before this time").allSender(this.req, this.res)
@@ -62,6 +56,13 @@ export class Creator implements controllerInputs {
                 }
     
                 new Gen(200, finalResult).resSender(this.req, this.res)
+
+                function matchingTimestamp(arr: Document[], time: number) {
+                    const ans = arr.find((item: any, index: number, arr: []) => {
+                        return item.timestamp <= time
+                    })
+                    return ans
+                }
             }
             catch (err) {
                 new Gen(500, err).allSender(this.req, this.res)
